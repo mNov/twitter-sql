@@ -28,7 +28,3 @@ module.exports = {
     User: User,
     Tweet: Tweet
 };
-
-User.findOne().then(function (user) {
-    console.log(user); // big old crazy object, but no name or id anywhere in there
-});
