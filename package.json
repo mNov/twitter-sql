@@ -1,0 +1,25 @@
+{
+  "name": "twitter-sql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "mysql": "^2.9.0",
+    "sequelize": "^3.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mNov/twitter-sql.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mNov/twitter-sql/issues"
+  },
+  "homepage": "https://github.com/mNov/twitter-sql#readme"
+}
