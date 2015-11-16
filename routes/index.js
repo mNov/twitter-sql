@@ -9,6 +9,7 @@ router.get('/', function (req, res) {
   //res.render( 'index', { title: 'Twitter.js', tweets: tweets } );
   //TODO: get all the tweets without tweetBank
   models.User.findAll({
+    order: ['name'],
     include: [models.Tweet]
   }).then(function(users){
     //console.dir(users);
@@ -25,11 +26,26 @@ router.get('/users/:userName', function(req,res){
   var name = req.params.userName;
   models.User
   .findOne({where: {name: name},
-            include: [models.Tweet]})
+            include: [models.Tweet],
+            order: ["id"]})
   .then(function(user){
     res.render('index', {
       users: [user]
     });
+  });
+});
+
+
+router.get('/users/:userName/tweets/:id', function(req,res){
+  var name = req.params.userName;
+  var id = req.params.id;
+  models.User
+  .findOne({where: {name: name},
+            include: [{model: models.Tweet,
+            where: {id: id}}]
+  }).then(function(user) {
+    console.log(JSON.stringify(user));
+    res.render('index', {users: [user]});
   });
 });
 

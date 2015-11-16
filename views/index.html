@@ -17,8 +17,13 @@
        {% for user in users %}
        
         {% for tweet in user.Tweets %}
-        <li>{{user.name}} - {{tweet.tweet}}</li>
-        <!-- <li><a href="/users/{{tweet.name}}">{{tweet.name}}</a> - <a href="/users/{{tweet.name}}/tweets/{{tweet.id}}">{{tweet.text}}</a></li> -->
+        <li>
+          <a href="/users/{{user.name}}" class="tweetbox">
+            <img src="{{user.pictureUrl}}">
+          </a>
+            <a href="/users/{{user.name}}/tweets/{{tweet.id}}">{{tweet.id}}</a> {{tweet.tweet}}
+        </li>
+
         {% endfor %}
       {% endfor %}
 
