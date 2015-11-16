@@ -5,6 +5,11 @@ module.exports = function(db) {
         name: Sequelize.STRING,
         pictureUrl: Sequelize.STRING
     }, {
+        classMethods: {
+            associate: function(models) {
+                User.hasMany(models.Tweet)
+            }
+        },
         timestamps: false  // this will deactivate the time columns
     });
 

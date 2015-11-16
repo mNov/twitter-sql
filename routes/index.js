@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var models = require('../models');
 // could use one line instead: var router = require('express').Router();
 //var tweetBank = require('../tweetBank');
 
@@ -7,24 +8,68 @@ router.get('/', function (req, res) {
   //var tweets = tweetBank.list();
   //res.render( 'index', { title: 'Twitter.js', tweets: tweets } );
   //TODO: get all the tweets without tweetBank
+  models.User.findAll({
+    include: [models.Tweet]
+  }).then(function(users){
+    //console.dir(users);
+    res.render('index', {
+      //title: 'Twitter.sql',
+      users: users
+    });
+  });
+
 });
 
-function getTweet (req, res){
-  //var tweets = tweetBank.find(req.params);
-  //res.render('index', { tweets: tweets });
-  //TODO: get a tweet without tweetBank
-}
 
-router.get('/users/:name', getTweet);
-router.get('/users/:name/tweets/:id', getTweet);
+router.get('/users/:userName', function(req,res){
+  var name = req.params.userName;
+  models.User
+  .findOne({where: {name: name},
+            include: [models.Tweet]})
+  .then(function(user){
+    res.render('index', {
+      users: [user]
+    });
+  });
+});
 
-// note: this is not very REST-ful. We will talk about REST in the future.
+
+router.get('/tweets/:id', function(req,res){
+  var id = req.params.id;
+  models.Tweet
+  .findOne({where: {id: id},
+            include: [models.User]})
+  .then(function(tweet){
+    console.dir(tweet);
+    res.render('tweet', {
+      tweet: tweet,
+      userName: tweet.dataValues.User.name
+    });
+  });
+});
+
+
+
 router.post('/submit', function(req, res) {
+    console.log("Hello! at /submit");
+    debugger;
   var name = req.body.name;
   var text = req.body.text;
   //tweetBank.add(name, text);
-  //TODO: add a tweet without tweetBank
-  res.redirect('/');
+
+  models.User
+  .findOrCreate({where: {name: name}, defaults: {}})
+  .then(function(user){
+     models.Tweet.create({
+         tweet: text,
+         UserId: user[0].dataValues.id});
+  }).then(function() {
+        res.redirect('/');
+    });
 });
+
+
+
+
 
 module.exports = router;

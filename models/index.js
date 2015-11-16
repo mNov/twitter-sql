@@ -17,12 +17,13 @@ twitterjsDB
     console.log('Connection has been established successfully.');
   });
 
-  var Tweet = require('./tweet')(twitterjsDB);
+var Tweet = require('./tweet')(twitterjsDB);
 var User = require('./user')(twitterjsDB);
 
 // adds a UserId foreign key to the `Tweet` table
 User.hasMany(Tweet);
 Tweet.belongsTo(User);
+
 
 module.exports = {
     User: User,

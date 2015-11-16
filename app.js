@@ -9,7 +9,8 @@ var express = require('express'),
 // "constants" (not really) and our own modules
 var PORT = 1337,
     app = express(),
-    routes = require('./routes/');
+    routes = require('./routes/index');
+    //users = require('./routes/users');
 
 // Swig boilerplate
 app.set('views', __dirname + '/views'); // where to find views
@@ -34,6 +35,7 @@ app.use(morgan('dev')); // logs req & res properties on response send
 
 // dynamic routing
 app.use('/', routes);
+//app.use('/users', users);
 
 // static routing
 app.use(express.static(__dirname + '/public'));
